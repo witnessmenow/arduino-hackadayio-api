@@ -4,7 +4,7 @@
  
     By Brian Lough
     YouTube: https://www.youtube.com/brianlough
-    Tindie: https://www.twitch.tv/brianlough
+    Tindie: https://www.tindie.com/stores/brianlough/
     Twitter: https://twitter.com/witnessmenow
  *******************************************************************/
 
@@ -29,7 +29,7 @@ char password[] = "password"; // your network password
 // https://dev.hackaday.io/applications
 
 // https://hackaday.io/project/163680-hackadayio-api-library-for-arduino
-#define HACAKDAY_PORJECT_ID 163680
+#define HACAKDAY_PROJECT_ID 163680
 
 //------- ---------------------- ------
 
@@ -127,8 +127,8 @@ void loop()
         Serial.println(ESP.getFreeHeap());
 
         Serial.print("Getting project info for ");
-        Serial.println(HACAKDAY_PORJECT_ID);
-        ProjectInfo projectInfo = hacakdayIo.getProjectInfo(HACAKDAY_PORJECT_ID);
+        Serial.println(HACAKDAY_PROJECT_ID);
+        ProjectInfo projectInfo = hacakdayIo.getProjectInfo(HACAKDAY_PROJECT_ID);
 
         printProjectInfoToSerial(projectInfo);
 

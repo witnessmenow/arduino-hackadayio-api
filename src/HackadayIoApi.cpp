@@ -102,7 +102,7 @@ ProjectInfo HackadayIoApi::getProjectInfo(int projectId)
     }
 
     // Get from https://arduinojson.org/v5/assistant/
-    const size_t bufferSize = JSON_ARRAY_SIZE(5) + JSON_OBJECT_SIZE(19);
+    const size_t bufferSize = JSON_ARRAY_SIZE(tagArraySize) + JSON_OBJECT_SIZE(19);
     ProjectInfo projectInfo;
     // This flag will get cleared if all goes well
     projectInfo.error = true;
