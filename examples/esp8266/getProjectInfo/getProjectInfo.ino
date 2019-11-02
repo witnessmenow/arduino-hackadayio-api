@@ -1,6 +1,10 @@
 /*******************************************************************
     Get Project Info on Hackaday.io and display to Serial
     monitor.
+
+    If you find what I do useful and would like to support me,
+    please consider becoming a sponsor on Github
+    https://github.com/sponsors/witnessmenow/
  
     By Brian Lough
     YouTube: https://www.youtube.com/brianlough
@@ -8,14 +12,26 @@
     Twitter: https://twitter.com/witnessmenow
  *******************************************************************/
 
-#include <HackadayIoApi.h>
+// ----------------------------
+// Standard Libraries
+// ----------------------------
+
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 
+// ----------------------------
+// Additional Libraries - each one of these will need to be installed.
+// ----------------------------
+
+#include <HackadayIoApi.h>
+// Library for connecting to the Hackaday.io API
+
+// Install from Github
+// https://github.com/witnessmenow/arduino-hackadayio-api/
+
 #include <ArduinoJson.h>
 // Library used for parsing Json from the API responses
-// NOTE: There is a breaking change in the 6.x.x version,
-// install the 5.x.x version instead
+
 // Search for "Arduino Json" in the Arduino Library manager
 // https://github.com/bblanchon/ArduinoJson
 
@@ -70,6 +86,10 @@ void setup()
 
     // If you want to enable some extra debugging
     //hacakdayIo._debug = true;
+
+    // If you get a "noMemory" error, you can increase this property
+    // (It defaults to 1000)
+    //hacakdayIo.addtionalStringSize = 1000;
 }
 
 void printProjectInfoToSerial(ProjectInfo projectInfo)

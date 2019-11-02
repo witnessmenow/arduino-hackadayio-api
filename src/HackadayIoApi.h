@@ -63,6 +63,7 @@ class HackadayIoApi
     ProjectInfo getProjectInfo(int projectId);
     int portNumber = 443;
     int tagArraySize = 10;
+    int addtionalStringSize = 1000;
     bool _debug = false;
     Client *client;
 

@@ -101,44 +101,45 @@ ProjectInfo HackadayIoApi::getProjectInfo(int projectId)
         Serial.println(command);
     }
 
-    // Get from https://arduinojson.org/v5/assistant/
-    const size_t bufferSize = JSON_ARRAY_SIZE(tagArraySize) + JSON_OBJECT_SIZE(19);
+    // Get from https://arduinojson.org/v6/assistant/
+    const size_t bufferSize = JSON_ARRAY_SIZE(tagArraySize) + JSON_OBJECT_SIZE(19) + addtionalStringSize ;
     ProjectInfo projectInfo;
     // This flag will get cleared if all goes well
     projectInfo.error = true;
     if (makeGetRequest(command))
     {
-        // Allocate JsonBuffer
-        DynamicJsonBuffer jsonBuffer(bufferSize);
+        // Allocate DynamicJsonDocument
+        DynamicJsonDocument doc(bufferSize);
 
         // Parse JSON object
-        JsonObject &root = jsonBuffer.parseObject(*client);
-        if (root.success())
+        DeserializationError error = deserializeJson(doc, *client);
+        if (!error)
         {
-            projectInfo.id = root["id"].as<int>();
-            projectInfo.url = (char *) root["url"].as<char *>(); 
-            projectInfo.owner_id = root["owner_id"].as<int>();
-            projectInfo.name = (char *) root["name"].as<char *>();
-            projectInfo.summary = (char *) root["summary"].as<char *>();
-            //projectInfo.description = (char *) root["description"].as<char *>();
-            projectInfo.image_url = (char *) root["image_url"].as<char *>();
-            projectInfo.views = root["views"].as<long>();
-            projectInfo.comments = root["comments"].as<int>();
-            projectInfo.followers = root["followers"].as<int>();
-            projectInfo.skulls = root["skulls"].as<int>();
-            //projectInfo.logs = root["logs"].as<int>();
-            //projectInfo.details = root["details"].as<int>();
-            //projectInfo.instruction = root["instruction"].as<int>();
-            //projectInfo.components = root["components"].as<int>();
-            //projectInfo.images = root["images"].as<int>();
-            projectInfo.created = root["created"].as<long>();
-            projectInfo.updated = root["updated"].as<long>();
+            projectInfo.id = doc["id"].as<int>();
+            projectInfo.url = (char *) doc["url"].as<char *>(); 
+            projectInfo.owner_id = doc["owner_id"].as<int>();
+            projectInfo.name = (char *) doc["name"].as<char *>();
+            projectInfo.summary = (char *) doc["summary"].as<char *>();
+            //projectInfo.description = (char *) doc["description"].as<char *>();
+            projectInfo.image_url = (char *) doc["image_url"].as<char *>();
+            projectInfo.views = doc["views"].as<long>();
+            projectInfo.comments = doc["comments"].as<int>();
+            projectInfo.followers = doc["followers"].as<int>();
+            projectInfo.skulls = doc["skulls"].as<int>();
+            //projectInfo.logs = doc["logs"].as<int>();
+            //projectInfo.details = doc["details"].as<int>();
+            //projectInfo.instruction = doc["instruction"].as<int>();
+            //projectInfo.components = doc["components"].as<int>();
+            //projectInfo.images = doc["images"].as<int>();
+            projectInfo.created = doc["created"].as<long>();
+            projectInfo.updated = doc["updated"].as<long>();
 
             projectInfo.error = false;
         }
         else
         {
-            Serial.println(F("Parsing failed!"));
+            Serial.print(F("deserializeJson() failed with code "));
+            Serial.println(error.c_str());
         }
     }
     closeClient();
