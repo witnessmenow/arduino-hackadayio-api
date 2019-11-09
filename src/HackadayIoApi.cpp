@@ -20,10 +20,9 @@
 
 #include "HackadayIoApi.h"
 
-HackadayIoApi::HackadayIoApi(Client &client, char *apiKey)
+HackadayIoApi::HackadayIoApi(Client& client, const char* apiKey)
+    : client(&client), _apiKey(apiKey)
 {
-    this->client = &client;
-    this->_apiKey = apiKey;
 }
 
 bool HackadayIoApi::makeGetRequest(char *command)
@@ -131,8 +130,8 @@ ProjectInfo HackadayIoApi::getProjectInfo(int projectId)
             //projectInfo.instruction = doc["instruction"].as<int>();
             //projectInfo.components = doc["components"].as<int>();
             //projectInfo.images = doc["images"].as<int>();
-            projectInfo.created = doc["created"].as<long>();
-            projectInfo.updated = doc["updated"].as<long>();
+            projectInfo.created = doc["created"].as<time_t>();
+            projectInfo.updated = doc["updated"].as<time_t>();
 
             projectInfo.error = false;
         }
